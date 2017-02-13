@@ -1,29 +1,27 @@
 const express = require('express');
-const swig = require('swig');
-const sqlite = require('sqlite3');
+const nunjucks = require('nunjucks');
 const path = require('path');
-const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const chalk = require('chalk');
 
 const port = process.env.PORT || 3000;
 const app = express();
 
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 
-// const db = new sqlite.Database('./acmeDB.sql', console.log);
-
 
 app.set('view engine', 'html');
-app.engine('html', swig.renderFile);
-swig.setDefaults({ cache: false });
+app.engine('html', nunjucks.render);
+nunjucks.configure('views', { noCache: true });
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
 
-app.use('/categories', require('./routes/categories'));
+app.use('/', require('./routes/categories'));
 
 app.get('/', (req, res) => {
   res.render('index');
 });
 
 app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+  console.log(chalk.bold.yellow(`Server is listening on port ${port}`));
 });

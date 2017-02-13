@@ -2,12 +2,30 @@
 <html>
 <head>
   <title>Acme Products Categories</title>
+  <link rel="stylesheet" type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
-  <ul class="nav nav-tabs">
-    <li><a href="/">Home</a></li>
-    <li><a href="/categories">Categories</a></li>
-  </ul>
-  {% block content %}{% endblock %}
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li><a href="/">Home</a></li>
+      <li><a href="/categories">Categories</a></li>
+    </ul>
+    <div class="row">
+      <div class="col-sm-6">
+        {% block categoryName %}
+          <h1>All Categories</h1>
+        {% endblock %}
+
+        {% block left %}
+        {% endblock %}
+      </div>
+
+      <div class="col-sm-6">
+        {% block right %}
+        {% endblock %}
+      </div>
+    </div>
+    {% block content %}{% endblock %}
+  </div>
 </body>
 </html>

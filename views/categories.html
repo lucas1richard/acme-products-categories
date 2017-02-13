@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+
+{% block categoryName %}
+  <h1>All Categories</h1>
+{% endblock %}
+
+
+{% block left %}
+  <form class="well" method="POST" action="/categories">
+    <p>
+      <input type="text" name="category" class="form-control" placeholder="add a category...">
+    </p>
+    <p>
+      <button class="btn btn-primary">
+        <span class="glyphicon glyphicon-save"></span>
+        Save
+      </button>
+    </p>
+  </form>
+  <div>
+    <ul class="list-group">
+    {% for category in categories %}
+      <li class="list-group-item">
+      <a href="categories/{{category.id}}">{{category.name}}</a>
+      <div class="pull-right">
+        <form method="POST" action="/categories/{{category.id}}?_method=DELETE">
+          <button class="btn btn-warning">
+            <span class="glyphicon glyphicon-trash"></span>
+            Delete
+          </button>
+        </form>
+      </div>
+      <br style="clear:both">
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
+
+
+{% block right %}
+  <h2>Data:</h2>
+  <pre>{{ categories | dump(2) }}</pre>
+{% endblock %}
